@@ -1,0 +1,76 @@
+import time
+
+class ContaBancaria:
+    def __init__(self, titular, saldo_inicial=0.0):
+        self.titular = titular
+        self.saldo = float(saldo_inicial)
+        self.historico = [f"Conta criada com saldo inicial de R${saldo_inicial:.2f}"]
+
+    def depositar(self, valor):
+        if valor > 0:
+            self.saldo += valor
+            self.historico.append(f"Depósito: +R${valor:.2f}")
+            print(f"[{self.titular}] Depósito de R${valor:.2f} realizado com sucesso!")
+        else:
+            print("Valor de depósito inválido.")
+
+    def sacar(self, valor):
+        if 0 < valor <= self.saldo:
+            self.saldo -= valor
+            self.historico.append(f"Saque: -R${valor:.2f}")
+            print(f"[{self.titular}] Saque de R${valor:.2f} realizado com sucesso!")
+            return True
+        else:
+            print(f"[{self.titular}] Falha no saque: Saldo insuficiente ou valor inválido.")
+            return False
+
+    def transferir(self, destino, valor):
+        print(f"\nIniciando transferência de R${valor:.2f} de {self.titular} para {destino.titular}...")
+        time.sleep(1) # Simula um leve processamento
+        if self.sacar(valor):
+            destino.depositar(valor)
+            self.historico.append(f"Transferência enviada para {destino.titular}: -R${valor:.2f}")
+            destino.historico.append(f"Transferência recebida de {self.titular}: +R${valor:.2f}")
+            print("Transferência concluída!")
+        else:
+            print("Transferência cancelada.")
+
+    def exibir_extrato(self):
+        print(f"\n=== Extrato da Conta: {self.titular} ===")
+        for transacao in self.historico:
+            print(f"- {transacao}")
+        print(f"Saldo Atual: R${self.saldo:.2f}")
+        print("=" * 35)
+
+
+# --- SIMULAÇÃO DA CIRCULAÇÃO DE DINHEIRO ---
+if __name__ == "__main__":
+    print("=== SISTEMA BANCÁRIO REINICIADO ===")
+    
+    # 1. Criando as contas bancárias (usuários)
+    conta_alice = ContaBancaria("Alice", 1000.0)
+    conta_bob = ContaBancaria("Bob", 250.0)
+    conta_loja = ContaBancaria("Mercado Central", 0.0)
+
+    # 2. Mostrando o estado inicial
+    conta_alice.exibir_extrato()
+    conta_bob.exibir_extrato()
+
+    # 3. Circulando o dinheiro
+    # Alice compra algo no Mercado Central
+    conta_alice.transferir(conta_loja, 350.0)
+    
+    # Bob deposita mais dinheiro na sua conta
+    conta_bob.depositar(150.0)
+    
+    # Bob paga a Alice uma dívida antiga
+    conta_bob.transferir(conta_alice, 200.0)
+    
+    # Mercado Central saca parte do lucro
+    conta_loja.sacar(100.0)
+
+    # 4. Exibindo o resultado final da circulação
+    print("\n--- RESULTADO FINAL DOS SALDOS ---")
+    conta_alice.exibir_extrato()
+    conta_bob.exibir_extrato()
+    conta_loja.exibir_extrato()
