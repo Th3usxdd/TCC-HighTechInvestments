@@ -96,15 +96,6 @@ A proposta é criar um site que centralize necessidades comuns de quem quer **pl
 - Banco de dados: `MySQL` / `PostgreSQL` / `SQLite`
 - Versionamento: `Git + GitHub`
 
------------------------------------------------------------------------------------------------------------------
-
-## Como Rodar (modelo)
-
-> Preencha quando o projeto já estiver com setup.
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/Th3usxdd/TCC-do-matheus-3ds.git
 -------------------------------------------------------------------------------------------------------------------
 cd TCC-do-matheus-3ds
 
