@@ -16,13 +16,7 @@ jobs:
     - name: Checkout do código
       uses: actions/checkout@v4
 
-    # 2. Configura o ambiente Node.js (comum para a maioria dos sites modernos)
-    - name: Configurar Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20' # Altere para a versão que você usa, se necessário
-        cache: 'npm'       # Agiliza o processo salvando o cache do npm
-
+   
     # 3. Instala as dependências do projeto de forma limpa e rápida
     - name: Instalar Dependências
       run: npm ci
