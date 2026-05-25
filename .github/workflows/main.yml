@@ -1,0 +1,43 @@
+name: Invest PR - CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    
+    # 🌟 DIZ PARA O GITHUB RODAR TUDO DENTRO DA SUA PASTA DO PROJETO
+    defaults:
+      run:
+        working-directory: TCC-HighTechInvestments
+
+    steps:
+    # 1. Copia os arquivos do seu repositório
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    # 2. Prepara o ambiente com o Node.js
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    # 3. Instala as dependências dentro da pasta certa
+    - name: Instalar Dependências
+      run: npm install
+
+    # 4. Verifica se o código possui erros de sintaxe
+    - name: Executar Linter
+      run: npm run lint --if-present
+
+    # 5. Roda testes automatizados (se houver)
+    - name: Executar Testes
+      run: npm test --if-present
+
+    # 6. Tenta buildar o site de investimentos
+    - name: Validar Build de Produção
+      run: npm run build
