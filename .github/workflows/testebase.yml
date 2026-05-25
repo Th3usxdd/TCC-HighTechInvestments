@@ -1,0 +1,29 @@
+name: Teste de Estrutura
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  verificar-pastas:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Baixa o código no servidor do GitHub
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    # 2. Lista os arquivos da raiz do seu repositório
+    - name: Listar arquivos da Raiz
+      run: |
+        echo "=== LISTANDO A RAIZ DO REPOSITÓRIO ==="
+        ls -la
+
+    # 3. Tenta listar o que tem dentro da sua pasta do projeto
+    - name: Listar arquivos da pasta TCC-HighTechInvestments
+      run: |
+        echo "=== LISTANDO A SUBPASTA ==="
+        cd TCC-HighTechInvestments && ls -la
+      continue-on-error: true # Se a pasta não existir com esse nome exato, ele não quebra o teste e nos mostra o erro
