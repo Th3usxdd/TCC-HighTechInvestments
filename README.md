@@ -1,8 +1,3 @@
-<!--
-README.md (Markdown) para seu TCC
-Cole este conteúdo no arquivo README.md do seu repositório.
--->
-<!-- O bloco acima é só um aviso para você. O conteúdo real do README está abaixo em Markdown. -->
 # TCC — Plataforma de Orçamentos, Financiamentos, Negócios, Ações e Freelancers
 
 Plataforma web para **simular orçamentos**, organizar **financiamentos**, acompanhar **negócios** e **ações**, além de conectar **clientes e freelancers** para serviços e projetos.  
@@ -89,28 +84,9 @@ A proposta é criar um site que centralize necessidades comuns de quem quer **pl
 
 ## Tecnologias (a definir)
 
-> Atualize de acordo com o que você realmente vai usar.
-
-- Front-end: `HTML`, `CSS`, `JavaScript` (ou `React`)
-- Back-end: `Node.js/Express` (ou `PHP`, `Java`, etc.)
+- Front-end: `HTML`, `CSS`, `JavaScript`
+- Back-end: `Node.js/Express`,`java`
 - Banco de dados: `MySQL` / `PostgreSQL` / `SQLite`
 - Versionamento: `Git + GitHub`
 
 -------------------------------------------------------------------------------------------------------------------
-cd TCC-do-matheus-3ds
-
-/docs
-/src
-  /pages
-  /components
-  /styles
-  /assets
-/server
-README.md
-----------------------------------------------------------------------------------------------------------------------
-Etapa 1: Pesquisa + definição do escopo (MVP)
-Etapa 2: Protótipo (Figma) + fluxos de navegação
-Etapa 3: Implementação do front-end
-Etapa 4: Back-end + banco de dados
-Etapa 5: Testes + ajustes + documentação
-Etapa 6: Apresentação final
