@@ -1,6 +1,6 @@
-name: Invest PR - Continuous Integration
+name: Invest PR - CI
 
-# Dispara o fluxo em qualquer push ou Pull Request na branch principal (main ou master)
+# O workflow roda sempre que você der 'push' ou abrir um 'pull request' na branch main ou master
 on:
   push:
     branches: [ "main", "master" ]
@@ -12,32 +12,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Faz o checkout do código do seu site no repositório
+    # 1. Copia os arquivos do seu repositório para a máquina virtual do GitHub
     - name: Checkout do código
       uses: actions/checkout@v4
 
-   
-    # 3. Instala as dependências do projeto de forma limpa e rápida
-    - name: Instalar Dependências
-      run: npm ci
+    # 2. Prepara o ambiente com o Node.js
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-    # 4. Verifica erros de sintaxe ou padrões de código (Opcional, remova se não usar ESLint/Prettier)
-    - name: Executar Linter (Validação de Código)
+    # 3. Instala as dependências (Usando 'npm install' para evitar o erro do package-lock)
+    - name: Instalar Dependências
+      run: npm install
+
+    # 4. Verifica se o código do site possui erros de sintaxe ou padronização
+    - name: Executar Linter
       run: npm run lint --if-present
 
-    # 5. Roda os testes unitários do seu site de investimentos (se houver)
-    - name: Executar Testes Automatizados
+    # 5. Roda testes automatizados (se você tiver configurado no projeto)
+    - name: Executar Testes
       run: npm test --if-present
 
-    # 6. Tenta gerar a versão final do site (O que iria para o servidor)
-    # Se o build falhar aqui, o GitHub te avisa e impede que um site quebrado vá ao ar
+    # 6. Tenta buildar o site para garantir que tudo compila perfeitamente
     - name: Validar Build de Produção
       run: npm run build
-
-    # 7. (Bônus) Guarda os arquivos gerados no build para você inspecionar se quiser
-    - name: Upload do Build para Inspeção
-      uses: actions/upload-artifact@v4
-      with:
-        name: site-investimento-dist
-        path: dist/ # Altere para 'build/' ou '.next/' dependendo do seu framework
-        retention-days: 5
