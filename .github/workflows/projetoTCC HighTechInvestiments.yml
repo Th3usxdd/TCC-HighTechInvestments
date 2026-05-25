@@ -1,0 +1,49 @@
+name: Invest PR - Continuous Integration
+
+# Dispara o fluxo em qualquer push ou Pull Request na branch principal (main ou master)
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Faz o checkout do código do seu site no repositório
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    # 2. Configura o ambiente Node.js (comum para a maioria dos sites modernos)
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Altere para a versão que você usa, se necessário
+        cache: 'npm'       # Agiliza o processo salvando o cache do npm
+
+    # 3. Instala as dependências do projeto de forma limpa e rápida
+    - name: Instalar Dependências
+      run: npm ci
+
+    # 4. Verifica erros de sintaxe ou padrões de código (Opcional, remova se não usar ESLint/Prettier)
+    - name: Executar Linter (Validação de Código)
+      run: npm run lint --if-present
+
+    # 5. Roda os testes unitários do seu site de investimentos (se houver)
+    - name: Executar Testes Automatizados
+      run: npm test --if-present
+
+    # 6. Tenta gerar a versão final do site (O que iria para o servidor)
+    # Se o build falhar aqui, o GitHub te avisa e impede que um site quebrado vá ao ar
+    - name: Validar Build de Produção
+      run: npm run build
+
+    # 7. (Bônus) Guarda os arquivos gerados no build para você inspecionar se quiser
+    - name: Upload do Build para Inspeção
+      uses: actions/upload-artifact@v4
+      with:
+        name: site-investimento-dist
+        path: dist/ # Altere para 'build/' ou '.next/' dependendo do seu framework
+        retention-days: 5
